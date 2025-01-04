@@ -1,38 +1,45 @@
 // find union from two sorted array
-vector <int> UnionSortedArray(const vector<int>& A, const vector<int>& B){
-    vector <int> result;
-    int i=0, j=0;
-    
-    while(i<A.size()&&j<B.size()){
-        if(A[i]<B[j]){
-            result.push_back(A[i]);
-            i++;
-        }
-        else if(A[i]>B[j]){
-            result.push_back(B[j]);
-            j++;
-        }
-        else{
-            result.push_back(A[i]);
-            i++;
-            j++;
-        }
-    }
-    while(i<A.size()){
-        result.push_back(A[i]);
+vector < int > UnionsortedArray(vector < int > a, vector < int > b) {
+    // Write your code here
+    int n1 = a.size();
+    int n2 = b.size();
+    int i = 0;
+    int j = 0;
+
+    vector<int> unionArr;
+    while(i<n1 && j<n2){
+        if(a[i]<=b[j]){
+            if(unionArr.size() == 0 || unionArr.back()!= a[i]){
+                unionArr.push_back(a[i]);
+            }
         i++;
+        }
+        else if(a[i]>=b[j]){
+            if(unionArr.size()==0|| unionArr.back()!=b[j]){
+                unionArr.push_back(b[j]);
+            }
+        j++;
+        }
     }
-    while(j<B.size()){
-        result.push_back(B[j]);
+    while(j<n2){
+        if(unionArr.size()==0|| unionArr.back()!=b[j]){
+                unionArr.push_back(b[j]);
+            }
         j++;
     }
-    return result;
+    while(i<n1){
+        if(unionArr.size() == 0 || unionArr.back()!= a[i]){
+                unionArr.push_back(a[i]);
+            }
+        i++;
+    }
+    return  unionArr;
 }
 
 int main(){
     vector<int> A = {1, 2, 4, 5};
     vector<int> B = {2, 3, 5, 6};
-    vector<int> result = UnionSortedArray(A,B);
+    vector<int> result = UnionsortedArray(A,B);
     for(int num: result){
         cout<<num<<" ";
     }
